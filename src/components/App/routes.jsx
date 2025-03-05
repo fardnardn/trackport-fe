@@ -2,6 +2,8 @@
 import { lazy } from "react";
 import { FaSpinner } from "react-icons/fa";
 
+
+
 const AuthRoutes = {
   Login: lazy(() => import("../../components/Auth/Login.jsx")),
   Register: lazy(() => import("../../components/Auth/Register.jsx")),
@@ -38,9 +40,9 @@ export const routeConfig = [
   // authentication routes
   { path: "/login", element: AuthRoutes.Login },
   { path: "/register", element: AuthRoutes.Register },
-  { path: "/forgot", element: AuthRoutes.Forgot },
-  { path: "/activate/:token", element: AuthRoutes.Activate },
-  { path: "/reset/:token", element: AuthRoutes.Reset },
+  // { path: "/forgot", element: AuthRoutes.Forgot },
+  // { path: "/activate/:token", element: AuthRoutes.Activate },
+  // { path: "/reset/:token", element: AuthRoutes.Reset },
 
   // Protected Routes
   {
@@ -63,12 +65,12 @@ export const routeConfig = [
   //   roles: ["admin", "user"],
   // },
   
-  {
-    path: "/dashboard/reports",
-    element: DashRoutes.Reports,
-    protected: true,
-    roles: ["admin", "user"],
-  },
+  // {
+  //   path: "/dashboard/reports",
+  //   element: DashRoutes.Reports,
+  //   protected: true,
+  //   roles: ["admin", "user"],
+  // },
   {
     path: "/dashboard/users",
     element: DashRoutes.Users,
