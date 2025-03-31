@@ -197,7 +197,10 @@ export default function TrackPortSystem() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       {/* Hero Section */}
-      <section className="pt-20 pb-24 px-4 md:pt-32 md:pb-40 bg-gradient-to-br from-blue-50 to-slate-100 dark:from-slate-800 dark:to-slate-900">
+      <section
+        id="hero"
+        className="pt-20 pb-24 px-4 md:pt-32 md:pb-40 bg-gradient-to-br from-blue-50 to-slate-100 dark:from-slate-800 dark:to-slate-900"
+      >
         <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
           <div className="lg:w-1/2 space-y-6 text-center lg:text-left">
             <h1 className="text-4xl md:text-5xl font-bold leading-tight">
@@ -367,8 +370,8 @@ export default function TrackPortSystem() {
         </div>
       </div>
 
-      {/* Features Section
-      <section id="features" className="py-20 px-4 bg-white dark:bg-slate-800">
+      {/* Features Section */}
+      {/* <section id="features" className="py-20 px-4 bg-white dark:bg-slate-800">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -404,7 +407,7 @@ export default function TrackPortSystem() {
       </section> */}
 
       {/* Comprehensive Tracking Features */}
-      <div className="bg-white dark:bg-gray-900 py-16">
+      <section id="features" className="bg-white dark:bg-gray-900 py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">
@@ -450,7 +453,7 @@ export default function TrackPortSystem() {
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
       {/* User Modules */}
       <div className="conta iner mx-auto bg-gray-100 dark:bg-gray-800  p-8">
@@ -494,112 +497,153 @@ export default function TrackPortSystem() {
           </p>
         </div>
 
-        <div className="relative">
-          {/* Timeline */}
-          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-blue-200 dark:bg-blue-900 transform -translate-x-1/2"></div>
+        <div className="max-w-6xl mx-auto">
+          {/* Timeline - visible on all screen sizes */}
+          <div className="relative">
+            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-blue-200 dark:bg-blue-900 md:transform md:-translate-x-1/2"></div>
 
-          {/* Steps */}
-          <div className="space-y-24 relative">
-            {/* Step 1 */}
-            <div className="flex flex-col md:flex-row items-center">
-              <div className="md:w-1/2 md:pr-16 mb-8 md:mb-0 md:text-right">
-                <h3 className="text-2xl font-bold mb-4">Port Receives Cargo</h3>
-                <p className="text-slate-600 dark:text-slate-300">
-                  Port officer marks shipments as "Received at Port" and the
-                  system timestamps this event. Customers are automatically
-                  notified that their shipment has arrived at the port.
-                </p>
-              </div>
-              <div className="md:absolute md:left-1/2 md:transform md:-translate-x-1/2 z-10 bg-blue-600 dark:bg-blue-500 text-white h-12 w-12 rounded-full flex items-center justify-center font-bold">
-                1
-              </div>
-              <div className="md:w-1/2 md:pl-16 hidden md:block">
-                <div className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
-                  <Ship className="h-10 w-10 text-blue-600 dark:text-blue-400 mb-2" />
-                  <p className="font-medium">
-                    Status Updated: Received at Port
+            {/* Steps */}
+            <div className="space-y-16 relative">
+              {/* Step 1 */}
+              <div className="flex flex-col md:flex-row items-start md:items-center">
+                <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 z-10 bg-blue-600 dark:bg-blue-500 text-white h-8 w-8 md:h-12 md:w-12 rounded-full flex items-center justify-center font-bold">
+                  1
+                </div>
+                <div className="pl-16 md:pl-0 md:w-1/2 md:pr-16 mb-6 md:mb-0 md:text-right">
+                  <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-4">
+                    Port Receives Cargo
+                  </h3>
+                  <p className="text-slate-600 dark:text-slate-300">
+                    Port officer marks shipments as "Received at Port" and the
+                    system timestamps this event. Customers are automatically
+                    notified that their shipment has arrived at the port.
                   </p>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
-                    03/31/2025 • 08:45 AM
+                </div>
+                <div className="hidden md:block md:w-1/2 md:pl-16">
+                  <div className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+                    <Ship className="h-10 w-10 text-blue-600 dark:text-blue-400 mb-2" />
+                    <p className="font-medium">
+                      Status Updated: Received at Port
+                    </p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
+                      03/31/2025 • 08:45 AM
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div className="flex flex-col md:flex-row items-start md:items-center">
+                <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 z-10 bg-blue-600 dark:bg-blue-500 text-white h-8 w-8 md:h-12 md:w-12 rounded-full flex items-center justify-center font-bold">
+                  2
+                </div>
+                <div className="hidden md:block md:w-1/2 md:pr-16">
+                  <div className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border border-slate-200 dark:border-slate-700 md:float-right">
+                    <Truck className="h-10 w-10 text-amber-600 dark:text-amber-400 mb-2" />
+                    <p className="font-medium">Driver Assigned: John D.</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
+                      Route: Mombasa → Nairobi
+                    </p>
+                  </div>
+                </div>
+                <div className="pl-16 md:pl-0 md:w-1/2 md:pl-16">
+                  <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-4">
+                    Warehouse/Transit Update
+                  </h3>
+                  <p className="text-slate-600 dark:text-slate-300">
+                    Manager assigns a driver and route, updating the status to
+                    "In Transit to [Location]". The driver sees the assigned
+                    shipment on their dashboard ready for delivery.
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className="flex flex-col md:flex-row items-start md:items-center">
+                <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 z-10 bg-blue-600 dark:bg-blue-500 text-white h-8 w-8 md:h-12 md:w-12 rounded-full flex items-center justify-center font-bold">
+                  3
+                </div>
+                <div className="pl-16 md:pl-0 md:w-1/2 md:pr-16 mb-6 md:mb-0 md:text-right">
+                  <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-4">
+                    Driver Delivery Updates
+                  </h3>
+                  <p className="text-slate-600 dark:text-slate-300">
+                    Drivers provide real-time updates: "Departed Warehouse",
+                    "Reached Checkpoint X". Optional GPS tracking shows the
+                    exact location and estimated arrival time.
+                  </p>
+                </div>
+                <div className="hidden md:block md:w-1/2 md:pl-16">
+                  <div className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+                    <MapPin className="h-10 w-10 text-green-600 dark:text-green-400 mb-2" />
+                    <p className="font-medium">Checkpoint Reached: Voi</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
+                      03/31/2025 • 02:30 PM
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Step 4 */}
+              <div className="flex flex-col md:flex-row items-start md:items-center">
+                <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 z-10 bg-blue-600 dark:bg-blue-500 text-white h-8 w-8 md:h-12 md:w-12 rounded-full flex items-center justify-center font-bold">
+                  4
+                </div>
+                <div className="hidden md:block md:w-1/2 md:pr-16">
+                  <div className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border border-slate-200 dark:border-slate-700 md:float-right">
+                    <CheckCircle className="h-10 w-10 text-green-600 dark:text-green-400 mb-2" />
+                    <p className="font-medium">Status Updated: Delivered</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
+                      Customer Confirmation Received
+                    </p>
+                  </div>
+                </div>
+                <div className="pl-16 md:pl-0 md:w-1/2 md:pl-16">
+                  <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-4">
+                    Final Delivery
+                  </h3>
+                  <p className="text-slate-600 dark:text-slate-300">
+                    Driver marks the shipment as "Delivered to Customer" and the
+                    customer confirms receipt. The system archives the completed
+                    shipment for future reference and reporting.
                   </p>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Step 2 */}
-            <div className="flex flex-col md:flex-row items-center">
-              <div className="md:w-1/2 md:pr-16 mb-8 md:mb-0 hidden md:block">
-                <div className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border border-slate-200 dark:border-slate-700 md:float-right">
-                  <Truck className="h-10 w-10 text-amber-600 dark:text-amber-400 mb-2" />
-                  <p className="font-medium">Driver Assigned: John D.</p>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
-                    Route: Mombasa → Nairobi
-                  </p>
-                </div>
-              </div>
-              <div className="md:absolute md:left-1/2 md:transform md:-translate-x-1/2 z-10 bg-blue-600 dark:bg-blue-500 text-white h-12 w-12 rounded-full flex items-center justify-center font-bold">
-                2
-              </div>
-              <div className="md:w-1/2 md:pl-16">
-                <h3 className="text-2xl font-bold mb-4">
-                  Warehouse/Transit Update
-                </h3>
-                <p className="text-slate-600 dark:text-slate-300">
-                  Manager assigns a driver and route, updating the status to "In
-                  Transit to [Location]". The driver sees the assigned shipment
-                  on their dashboard ready for delivery.
-                </p>
-              </div>
+          {/* Mobile-only status cards */}
+          <div className="md:hidden space-y-8 mt-8">
+            <div className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+              <Ship className="h-8 w-8 text-blue-600 dark:text-blue-400 mb-2" />
+              <p className="font-medium">Status Updated: Received at Port</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">
+                03/31/2025 • 08:45 AM
+              </p>
             </div>
 
-            {/* Step 3 */}
-            <div className="flex flex-col md:flex-row items-center">
-              <div className="md:w-1/2 md:pr-16 mb-8 md:mb-0 md:text-right">
-                <h3 className="text-2xl font-bold mb-4">
-                  Driver Delivery Updates
-                </h3>
-                <p className="text-slate-600 dark:text-slate-300">
-                  Drivers provide real-time updates: "Departed Warehouse",
-                  "Reached Checkpoint X". Optional GPS tracking shows the exact
-                  location and estimated arrival time.
-                </p>
-              </div>
-              <div className="md:absolute md:left-1/2 md:transform md:-translate-x-1/2 z-10 bg-blue-600 dark:bg-blue-500 text-white h-12 w-12 rounded-full flex items-center justify-center font-bold">
-                3
-              </div>
-              <div className="md:w-1/2 md:pl-16 hidden md:block">
-                <div className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
-                  <MapPin className="h-10 w-10 text-green-600 dark:text-green-400 mb-2" />
-                  <p className="font-medium">Checkpoint Reached: Voi</p>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
-                    03/31/2025 • 02:30 PM
-                  </p>
-                </div>
-              </div>
+            <div className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+              <Truck className="h-8 w-8 text-amber-600 dark:text-amber-400 mb-2" />
+              <p className="font-medium">Driver Assigned: John D.</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">
+                Route: Mombasa → Nairobi
+              </p>
             </div>
 
-            {/* Step 4 */}
-            <div className="flex flex-col md:flex-row items-center">
-              <div className="md:w-1/2 md:pr-16 mb-8 md:mb-0 hidden md:block">
-                <div className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border border-slate-200 dark:border-slate-700 md:float-right">
-                  <CheckCircle className="h-10 w-10 text-green-600 dark:text-green-400 mb-2" />
-                  <p className="font-medium">Status Updated: Delivered</p>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
-                    Customer Confirmation Received
-                  </p>
-                </div>
-              </div>
-              <div className="md:absolute md:left-1/2 md:transform md:-translate-x-1/2 z-10 bg-blue-600 dark:bg-blue-500 text-white h-12 w-12 rounded-full flex items-center justify-center font-bold">
-                4
-              </div>
-              <div className="md:w-1/2 md:pl-16">
-                <h3 className="text-2xl font-bold mb-4">Final Delivery</h3>
-                <p className="text-slate-600 dark:text-slate-300">
-                  Driver marks the shipment as "Delivered to Customer" and the
-                  customer confirms receipt. The system archives the completed
-                  shipment for future reference and reporting.
-                </p>
-              </div>
+            <div className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+              <MapPin className="h-8 w-8 text-green-600 dark:text-green-400 mb-2" />
+              <p className="font-medium">Checkpoint Reached: Voi</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">
+                03/31/2025 • 02:30 PM
+              </p>
+            </div>
+
+            <div className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+              <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-400 mb-2" />
+              <p className="font-medium">Status Updated: Delivered</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">
+                Customer Confirmation Received
+              </p>
             </div>
           </div>
         </div>
@@ -661,10 +705,7 @@ export default function TrackPortSystem() {
       </section>
 
       {/* Pricing Section */}
-      <section
-        id="pricing"
-        className="py-20 px-4 bg-white dark:bg-slate-900"
-      >
+      <section id="pricing" className="py-20 px-4 bg-white dark:bg-slate-900">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">

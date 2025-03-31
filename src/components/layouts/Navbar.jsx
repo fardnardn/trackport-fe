@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { NavLink,Link, useLocation } from "react-router-dom";
 import { Menu, X, Moon, Sun, User, LogOut, PackageSearch } from "lucide-react";
 import { Button } from "@/components/shadcn/button";
 import { useUserStore } from "@/store/useUserStore";
@@ -13,12 +13,24 @@ const Navbar = () => {
 
   // Updated Navigation for Tracking System
   const navItems = [
-    // { name: "Home", path: "/" },
-    { name: "Track Shipment", path: "/track" },
-    { name: "pricing", path: "/pricing" },
-    // { name: "Locations", path: "/locations" },
-    { name: "Support", path: "/support" },
+    { name: "Features", id: "features" },
+    { name: "How it Works", id: "how-it-works" },
+    { name: "Pricing", id: "pricing" },
   ];
+
+const scrollToSection = (id) => {
+  // Small timeout to ensure DOM is ready
+  setTimeout(() => {
+    const section = document.getElementById(id);
+    if (section) {
+      // More reliable scroll method
+      window.scrollTo({
+        top: section.offsetTop - 100, // Adjust for fixed header
+        behavior: "smooth",
+      });
+    }
+  }, 50);
+};
 
   return (
     <nav
@@ -45,18 +57,24 @@ const Navbar = () => {
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">
               {navItems.map((item) => (
-                <Link
+                <NavLink
                   key={item.name}
-                  to={item.path}
-                  className={`px-3 py-2 rounded-md text-sm font-medium ${
-                    location.pathname === item.path
-                      ? "dark:bg-gray-700 dark:text-white bg-gray-200 text-gray-900"
-                      : "dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                  }`}
+                  onClick={() => scrollToSection(item.id)}
+                  // to={item.path}
+                  className={`px-3 py-2 rounded-md text-sm font-medium `}
                 >
                   {item.name}
-                </Link>
+                </NavLink>
               ))}
+              {/* {navItems.map((item) => (
+                <button
+                  key={item.name}
+                  onClick={() => scrollToSection(item.id)}
+                  className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+                >
+                  {item.name}
+                </button>
+              ))} */}
             </div>
           </div>
 
@@ -138,17 +156,12 @@ const Navbar = () => {
             {navItems.map((item) => (
               <Link
                 key={item.name}
-                to={item.path}
-                className={`block px-3 py-2 rounded-md text-base font-medium ${
-                  location.pathname === item.path
-                    ? darkMode
-                      ? "bg-gray-700 text-white"
-                      : "bg-gray-100 text-gray-900"
-                    : darkMode
-                    ? "text-gray-300 hover:bg-gray-700 hover:text-white"
-                    : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                }`}
-                onClick={toggleMenu}
+                // to={item.path}
+                className={`block px-3 py-2 rounded-md text-base font-medium `}
+                onClick={() => {
+                  scrollToSection(item.id);
+                  toggleMenu(); // Close menu on click
+                }}
               >
                 {item.name}
               </Link>
