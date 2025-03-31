@@ -210,7 +210,7 @@ export const routes = [
         path: "settings/profile",
         element: DashRoutes.Profile,
         protected: true,
-        roles: ["admin", "manager", "staff", "customer"],
+        roles: ["admin", "manager", "staff",'driver', "customer"],
       },
 
       // Fallback for unmatched routes
