@@ -3,7 +3,7 @@ import { Outlet, NavLink } from "react-router-dom";
 
 const ShipmentsLayout = () => {
   return (
-    <div className="p-4 md:p-6">
+    <div className="contai ner p-9 md:p-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold">Shipments</h1>
         <p className="text-gray-500 dark:text-gray-400">
