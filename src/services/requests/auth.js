@@ -106,8 +106,8 @@ export const handleServerReset = async (data, navigate) => {
 export const logoutUser = async (logout, navigate) => {
   try {
     await apiClient1.delete("logouts");
-    logout();
-    navigate("/login");
+    logout(navigate);
+    // navigate("/login");
   } catch (error) {
     console.error("Logout failed:", error);
   }

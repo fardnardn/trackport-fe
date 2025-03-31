@@ -98,7 +98,7 @@ export const routes = [
         path: "shipments",
         element: DashRoutes.ShipmentsLayout,
         protected: true,
-        roles: ["admin", "manager", "driver", "staff"],
+        roles: ["admin", "manager", "driver", "staff", 'customer'],
         children: [
           {
             path: "",
@@ -116,7 +116,7 @@ export const routes = [
             path: "receive",
             element: DashRoutes.ShipmentReceive,
             protected: true,
-            roles: ["admin", "manager", "staff"],
+            roles: ["admin", "manager", "staff", "customer"],
           },
           {
             path: "track",
@@ -210,7 +210,7 @@ export const routes = [
         path: "settings/profile",
         element: DashRoutes.Profile,
         protected: true,
-        roles: ["admin", "manager", "staff"],
+        roles: ["admin", "manager", "staff", "customer"],
       },
 
       // Fallback for unmatched routes

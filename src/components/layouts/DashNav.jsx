@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation,useNavigate } from "react-router-dom";
 import {
   Menu,
   X,
@@ -35,6 +35,7 @@ const DashNav = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [expandedItems, setExpandedItems] = useState({});
   const location = useLocation();
+  const navigate = useNavigate()
   const { user, loggedIn, logOut, darkMode, toggleDarkMode } = useUserStore();
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
@@ -50,8 +51,7 @@ const DashNav = () => {
       action: {
         label: "Confirm",
         onClick: () => {
-          toast.success("Logged out successfully");
-          logOut();
+          logOut(navigate);
         },
       },
       cancel: {

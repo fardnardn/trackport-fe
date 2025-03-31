@@ -29,9 +29,10 @@ export const useUserStore = create(
       },
 
       // Simple logout
-      logOut: async () => {
+      logOut: async (navigate) => {
         toast.success("Logged out");
         set({ user: null, loggedIn: false });
+        navigate("/login")
       },
 
       // Toggle dark mode

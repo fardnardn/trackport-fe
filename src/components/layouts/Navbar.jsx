@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink,Link, useLocation } from "react-router-dom";
+import { NavLink,Link, useLocation,useNavigate } from "react-router-dom";
 import { Menu, X, Moon, Sun, User, LogOut, PackageSearch } from "lucide-react";
 import { Button } from "@/components/shadcn/button";
 import { useUserStore } from "@/store/useUserStore";
@@ -7,6 +7,7 @@ import { useUserStore } from "@/store/useUserStore";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate()
   const { darkMode, toggleDarkMode, user, loggedIn, logOut } = useUserStore();
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -106,7 +107,7 @@ const scrollToSection = (id) => {
                 <Button
                   variant="destructive"
                   size="icon"
-                  onClick={logOut}
+                  onClick={()=>logOut(navigate)}
                   className="ml-auto"
                 >
                   <LogOut size={20} />
@@ -184,7 +185,7 @@ const scrollToSection = (id) => {
                 <Button
                   variant="destructive"
                   size="icon"
-                  onClick={logOut}
+                  onClick={()=>logOut(navigate)}
                   className="ml-auto"
                 >
                   <LogOut size={20} />

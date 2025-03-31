@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PencilLine, Upload, Save, Loader } from "lucide-react";
+import { PencilLine, Upload, Save, Loader, LogOut } from "lucide-react";
 import { useUserStore } from "@/store/useUserStore";
 import {
   Card,
@@ -17,10 +17,14 @@ import { Input } from "@/components/shadcn/input";
 import { Label } from "@/components/shadcn/label";
 import { toast } from "sonner";
 
+import { useNavigate } from "react-router-dom";
+
 export default function ProfilePage() {
   const user = useUserStore((state) => state.user);
+  const {logOut} = useUserStore()
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const navigate = useNavigate()
 
   console.log(user)
 
@@ -47,6 +51,25 @@ export default function ProfilePage() {
       .join("")
       .toUpperCase();
   };
+
+
+    const handleLogout = () => {
+      toast.error("Are you sure you want to logout?", {
+        action: {
+          label: "Confirm",
+          onClick: () => {
+            // toast.success("Logged out successfully");
+            logOut(navigate);
+          },
+        },
+        cancel: {
+          label: "Cancel",
+          onClick: () => toast.dismiss(),
+        },
+        duration: Infinity,
+      });
+    };
+  
 
   const handleEdit = () => {
     setOriginalProfile({ ...profile });
@@ -245,6 +268,14 @@ export default function ProfilePage() {
               )}
             </CardContent>
           </Card>
+      <Button
+        variant="destructive"
+        onClick={handleLogout}
+        className="w-fu flex items-center px-4 py-2.5 rounded-lg transition-colors mt-8"
+      >
+        <LogOut className="w-5 h-5 mr-2" />
+        <span className="font-medium text-sm">Log Out</span>
+      </Button>
         </CardContent>
       </Card>
     </div>
