@@ -292,8 +292,8 @@ const DashNav = () => {
   return (
     <>
       {/* Mobile Nav */}
-      <nav className="sticky top-0 z-20 w-full border-b bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white lg:hidden">
-        <div className="px-4 sm:px-6">
+      <nav className="sticky  top-0 z-20 w-full border-b bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white ">
+        <div className="px-4 sm:px-6 container mx-auto">
           <div className="flex items-center justify-between h-16">
             {/* Left */}
             <div className="flex items-center">
@@ -378,7 +378,7 @@ const DashNav = () => {
       <aside
         className={`h-screen w-64 bg-gray-100 dark:bg-gray-950 fixed top-0 left-0 z-30 transform transition-transform duration-300 ease-in-out overflow-y-auto 
         ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+          sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x -0"
         }`}
       >
         {/* Logo */}
@@ -395,7 +395,7 @@ const DashNav = () => {
             variant="ghost"
             size="icon"
             onClick={toggleSidebar}
-            className="lg:hidden"
+            className=""
           >
             <X size={24} />
           </Button>
