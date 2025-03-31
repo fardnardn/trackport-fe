@@ -190,9 +190,11 @@ const DashNav = () => {
       <div key={item.name}>
         {item.hasDropdown ? (
           <>
-            <button
+            <Button
+              size='xl'
+              variant='outline'
               onClick={() => toggleExpand(item.name)}
-              className={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg transition-colors
+              className={`w-full mb-5  flex items-center justify-between px-4 py-2.5 rounded-lg transition-colors
                 ${
                   isActive || isExpanded
                     ? "bg-gray-200 dark:bg-gray-800"
@@ -222,7 +224,7 @@ const DashNav = () => {
               ) : (
                 <ChevronRight className="w-4 h-4 text-gray-500" />
               )}
-            </button>
+            </Button>
 
             {isExpanded && (
               <div className="ml-6 mt-1 space-y-1">
@@ -232,10 +234,10 @@ const DashNav = () => {
                     <Link
                       key={child.name}
                       to={child.path}
-                      className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
+                      className={`flex items-center mb-4 px-4 py-2 rounded-lg transition-colors ${
                         isChildActive
                           ? "bg-teal-500 text-white"
-                          : "text-gray-600 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
+                          : "text-gray-600 border border-gray-300 dark:border-gray-700 hover:bg-teal-100 dark:text-gray-900 dark:hover:bg-gray-800"
                       }`}
                     >
                       <div
@@ -263,7 +265,7 @@ const DashNav = () => {
         ) : (
           <Link
             to={item.path}
-            className={`flex items-center px-4 py-2.5 rounded-lg transition-colors ${
+            className={`flex border items-center mb-5 px-4 py-2.5 rounded-lg transition-colors ${
               isActive
                 ? "bg-teal-500 text-white"
                 : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
@@ -305,11 +307,11 @@ const DashNav = () => {
               </div>
               <Button
                 variant="ghost"
-                size="icon"
+                // size="icon"
                 onClick={toggleSidebar}
-                className="inline-flex items-center justify-center rounded-md text-gray-500"
+                className=""
               >
-                <Menu size={24} />
+                <Menu />
               </Button>
             </div>
 

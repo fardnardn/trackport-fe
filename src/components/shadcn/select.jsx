@@ -7,19 +7,30 @@ import { cn } from "@/lib/utils";
 
 const variants = {
   default:
-    "border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-500/30",
+    "border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-500/30 bg-gray-100 dark:bg-gray-800 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-900 dark:to-gray-700 text-gray-900 dark:text-gray-100",
+
   primary:
-    "border-blue-400 dark:border-blue-600 focus:border-blue-600 focus:ring-blue-600/30",
+    "border-blue-400 dark:border-blue-600 focus:border-blue-600 focus:ring-blue-600/30 bg-blue-100 dark:bg-blue-900 bg-gradient-to-br from-blue-200 to-blue-400 dark:from-blue-800 dark:to-blue-600 text-blue-900 dark:text-blue-100",
+
   secondary:
-    "border-gray-400 dark:border-gray-500 focus:border-gray-600 focus:ring-gray-600/30",
+    "border-gray-400 dark:border-gray-500 focus:border-gray-600 focus:ring-gray-600/30 bg-gray-200 dark:bg-gray-900 bg-gradient-to-br from-gray-300 to-gray-500 dark:from-gray-800 dark:to-gray-700 text-gray-900 dark:text-gray-100",
+
   success:
-    "border-green-400 dark:border-green-600 focus:border-green-600 focus:ring-green-600/30",
+    "border-green-400 dark:border-green-600 focus:border-green-600 focus:ring-green-600/30 bg-green-100 dark:bg-green-900 bg-gradient-to-br from-green-200 to-green-400 dark:from-green-800 dark:to-green-600 text-green-900 dark:text-green-100",
+
   warning:
-    "border-yellow-400 dark:border-yellow-600 focus:border-yellow-600 focus:ring-yellow-600/30",
+    "border-yellow-400 dark:border-yellow-600 focus:border-yellow-600 focus:ring-yellow-600/30 bg-yellow-100 dark:bg-yellow-900 bg-gradient-to-br from-yellow-200 to-yellow-400 dark:from-yellow-800 dark:to-yellow-600 text-yellow-900 dark:text-yellow-100",
+
   danger:
-    "border-red-400 dark:border-red-600 focus:border-red-600 focus:ring-red-600/30",
-  info: "border-indigo-400 dark:border-indigo-600 focus:border-indigo-600 focus:ring-indigo-600/30",
-};
+    "border-red-400 dark:border-red-600 focus:border-red-600 focus:ring-red-600/30 bg-red-100 dark:bg-red-900 bg-gradient-to-br from-red-200 to-red-400 dark:from-red-800 dark:to-red-600 text-red-900 dark:text-red-100",
+
+  info:"border-indigo-400 dark:border-indigo-600 focus:border-indigo-600 focus:ring-indigo-600/30 bg-indigo-100 dark:bg-indigo-900 bg-gradient-to-br from-indigo-200 to-indigo-400 dark:from-indigo-800 dark:to-indigo-600 text-indigo-900 dark:text-indigo-100",
+
+  devMode:"border-green-500 dark:border-green-600 focus:border-green-600 focus:ring-green-600/30 bg-teal-500 dark:bg-green-900 bg-gradient-to-br from-teal-600 to-sky-800 dark:from-sky-900 dark:to-teal-500 text-green-100 dark:text-green-200 font-mono uppercase tracking-wider shadow-lg shadow-green-500/20",
+
+  sudoMaster:"border-purple-500 dark:border-purple-700 focus:border-purple-700 focus:ring-purple-700/30 bg-purple-700 dark:bg-indigo-900 bg-gradient-to-br from-purple-600 to-indigo-900 dark:from-purple-800 dark:to-indigo-950 text-white dark:text-indigo-200 font-bold uppercase tracking-widest shadow-lg shadow-purple-500/30",
+  };
+
 
 const sizes = {
   sm: "h-8 px-2.5 py-1.5 text-xs",

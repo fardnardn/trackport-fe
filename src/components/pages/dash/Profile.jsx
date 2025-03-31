@@ -31,8 +31,8 @@ export default function ProfilePage() {
     phone: "+254756982543", // Not in backend data
     address: "Westlands, Ojijo road, Kenrailit", // Not in backend data
     kra: "A014676297R", // Not in backend data
-    role: user?.role||"IT & Telecommunication", // Not in backend data
-    photo: "/src/assets/images/prof.jpeg", // Placeholder image
+    role: user?.role || "IT & Telecommunication", // Not in backend data
+    photo: "/src/assets/Paul.png", // Placeholder image
   });
 
   // Store original profile data to enable cancel functionality

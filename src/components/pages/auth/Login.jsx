@@ -120,6 +120,10 @@ export default function Login() {
           duration: 2000,
           description: `You now have ${devModeUserType} level access`,
         });
+        setTimeout(() => {
+          navigate("/dashboard/settings/profile");
+          
+        }, 2000);
       }
     } catch (error) {
       console.error("Dummy login failed:", error);
@@ -258,9 +262,9 @@ export default function Login() {
               <Select
                 // value={devModeUserType}
                 onValueChange={setDevModeUserType}
-                variant="success"
+                variant="devM de"
               >
-                <SelectTrigger variant="success" className="w-[150px]">
+                <SelectTrigger variant="devMode" className="w-[150px]">
                   <SelectValue
                     placeholder={devModeUserType || "Select user type"}
                   />
