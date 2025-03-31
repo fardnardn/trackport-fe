@@ -52,7 +52,7 @@ function SelectTrigger({
       data-slot="select-trigger"
       className={cn(
         // Base styles
-        "flex w-full items-center justify-between gap-2 rounded-md border bg-white dark:bg-gray-800 shadow-sm",
+        "flex w-full items-center justify-between gap-2 rounded-md border  shadow-sm",
         "text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400",
         "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900",
         "transition-all duration-200",

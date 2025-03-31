@@ -1,14 +1,8 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Moon, Sun, User, LogOut } from "lucide-react";
-// import { useUserStore } from "../path/to/your/store"; // Update this path
+import { Menu, X, Moon, Sun, User, LogOut, PackageSearch } from "lucide-react";
 import { Button } from "@/components/shadcn/button";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/shadcn/avatar";
-import {useUserStore} from "@/store/useUserStore";
+import { useUserStore } from "@/store/useUserStore";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,18 +11,14 @@ const Navbar = () => {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // Navigation items
+  // Updated Navigation for Tracking System
   const navItems = [
-    { name: "Home", path: "/" },
-    { name: "Patients", path: "/patients" },
-    { name: "Doctors", path: "/doctors" },
-    { name: "Appointments", path: "/appointments" },
-    { name: "Records", path: "/records" },
-    // { name: "Contact Us", path: "/contact" },
+    // { name: "Home", path: "/" },
+    { name: "Track Shipment", path: "/track" },
+    { name: "pricing", path: "/pricing" },
+    // { name: "Locations", path: "/locations" },
+    { name: "Support", path: "/support" },
   ];
-
-
-  // console.log(user);
 
   return (
     <nav
@@ -43,12 +33,10 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
-              <span
-                className={`font-bold text-2xl dark:text-white text-gray-900
-               `}
-              >
-                tib
-                <span className="text-rose-600 dark:text-rose-400">ER</span>bu
+              <PackageSearch className="h-8 w-8 text-blue-500" />
+              <span className="font-bold text-2xl ml-2">
+                Track
+                <span className="text-rose-600 dark:text-rose-400">Port</span>
               </span>
             </Link>
           </div>
@@ -72,34 +60,29 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Right side items */}
-          <div className="hidden md:flex items-center space-x-1">
-            {/* Dark mode toggle button */}
+          {/* Right Side Items */}
+          <div className="hidden md:flex items-center space-x-2">
             <Button
               variant="ghost"
               size="icon"
               onClick={toggleDarkMode}
-              className={`rounded-full p-1 `}
+              className="rounded-full"
             >
               {darkMode ? (
-                <Sun className=" text-yellow-400" />
+                <Sun className="text-yellow-400" />
               ) : (
                 <Moon size={20} />
               )}
             </Button>
-            <div className="md:block hidden">
+
             {loggedIn ? (
-              <div className="md:block hidden  items-center px-5">
+              <div className="flex gap-2 items-center">
                 <Link
                   to="/dashboard"
-                  className={`flex items-center px-3 py-2 rounded-md text-sm font-medium 
-                    
-                    dark:bg-green-600 dark: text-black dark:hover:bg-green-700
-                      bg-green-500  hover:bg-green-600
-                  `}
+                  className="flex items-center px-3 py-2 rounded-md text-sm font-medium dark:bg-green-600 dark:hover:bg-green-700 bg-green-500 hover:bg-green-600"
                 >
                   <User size={16} className="mr-1" />
-                  Dashboard
+                  Dash
                 </Link>
 
                 <Button
@@ -112,58 +95,46 @@ const Navbar = () => {
                 </Button>
               </div>
             ) : (
-              <div className="md:block hidden px-5">
-                <Link
-                  to="/login"
-                  className={`block px-3 py-2 rounded-md text-base font-medium text-center ${
-                    darkMode
-                      ? "bg-blue-600 text-white hover:bg-blue-700"
-                      : "bg-blue-500 text-white hover:bg-blue-600"
-                  }`}
-                  onClick={toggleMenu}
-                >
-                  Login
-                </Link>
-              </div>
+              <Link
+                to="/login"
+                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                  darkMode
+                    ? "bg-blue-600 text-white hover:bg-blue-700"
+                    : "bg-blue-500 text-white hover:bg-blue-600"
+                }`}
+              >
+                Login
+              </Link>
             )}
-            </div>
           </div>
 
-          {/* Mobile menu button */}
-            <div className="flex md:hidden">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={toggleDarkMode}
-                className={`rounded-full mr-2 ${
-                  darkMode ? "hover:bg-gray-700" : "hover:bg-gray-100"
-                }`}
-              >
-                {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-              </Button>
+          {/* Mobile Menu Button */}
+          <div className="flex md:hidden">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleDarkMode}
+              className="rounded-full mr-2"
+            >
+              {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+            </Button>
 
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={toggleMenu}
-                className={`inline-flex items-center justify-center p-2 rounded-md ${
-                  darkMode
-                    ? "text-gray-400 hover:text-white hover:bg-gray-700"
-                    : "text-gray-500 hover:text-gray-900 hover:bg-gray-100"
-                }`}
-              >
-                <span className="sr-only">Open main menu</span>
-                {isOpen ? <X size={24} /> : <Menu size={24} />}
-              </Button>
-            </div>
-          
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleMenu}
+              className="rounded-md"
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </Button>
+          </div>
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile Menu Overlay */}
       {isOpen && (
-        <div className={`md:hidden ${darkMode ? "bg-gray-900" : "bg-white"}`}>
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <div className="absolute top-16 left-0 w-full bg-white dark:bg-gray-900 backdrop-blur-md shadow-md z-50 md:hidden">
+          <div className="px-2 pt-2 pb-3 space-y-1">
             {navItems.map((item) => (
               <Link
                 key={item.name}
@@ -183,16 +154,15 @@ const Navbar = () => {
               </Link>
             ))}
           </div>
+
+          {/* Mobile Auth Section */}
           <div className="pt-4 pb-3 border-t border-gray-700">
             {loggedIn ? (
               <div className="flex items-center px-5">
                 <Link
                   to="/dashboard"
-                  className={`flex items-center px-3 py-2 rounded-md text-sm font-medium 
-                    
-                    dark:bg-green-600 dark: text-black dark:hover:bg-green-700
-                      bg-green-500  hover:bg-green-600
-                  `}
+                  className="flex items-center px-3 py-2 rounded-md text-sm font-medium dark:bg-green-600 dark:hover:bg-green-700 bg-green-500 hover:bg-green-600"
+                  onClick={toggleMenu}
                 >
                   <User size={16} className="mr-1" />
                   Dashboard
@@ -211,11 +181,7 @@ const Navbar = () => {
               <div className="px-5">
                 <Link
                   to="/login"
-                  className={`block px-3 py-2 rounded-md text-base font-medium text-center ${
-                    darkMode
-                      ? "bg-blue-600 text-white hover:bg-blue-700"
-                      : "bg-blue-500 text-white hover:bg-blue-600"
-                  }`}
+                  className="block px-3 py-2 rounded-md text-base font-medium text-center bg-blue-500 text-white hover:bg-blue-600"
                   onClick={toggleMenu}
                 >
                   Login

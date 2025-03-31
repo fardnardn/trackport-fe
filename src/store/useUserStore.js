@@ -1,24 +1,40 @@
-import { create } from 'zustand'
-import { devtools, persist } from 'zustand/middleware'
-import { toast } from 'sonner';
-
-import { apiClient1 } from "../services/apiClient";
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import { toast } from "sonner";
 
 export const useUserStore = create(
-  devtools(
-    // persist(
+  persist(
     (set, get) => ({
       user: null,
-
-      token: null,
       loggedIn: false,
+      darkMode: false,
 
-      darkMode: JSON.parse(localStorage.getItem("darkMode")) || false,
+      // Simple login function that just sets the user
+      login: async (credentials) => {
+        // Enrich the user data with some basic demo info
+        const user = {
+          ...credentials,
+          id: `${credentials.role}-${Date.now()}`,
+          name:
+            credentials.role.charAt(0).toUpperCase() +
+            credentials.role.slice(1),
+          avatar: `https://i.pravatar.cc/150?u=${credentials.email}`,
+          permissions: getDefaultPermissions(credentials.role),
+          lastLogin: new Date().toISOString(),
+        };
 
-      // Get user info
-      getUser: () => get().user,
+        set({ user, loggedIn: true });
+        // toast.success(`Logged in as ${user.role}`);
+        return { data: { user } };
+      },
 
-      // Toggle Dark Mode
+      // Simple logout
+      logOut: async () => {
+        toast.success("Logged out");
+        set({ user: null, loggedIn: false });
+      },
+
+      // Toggle dark mode
       toggleDarkMode: () => {
         toast.success("Dark mode toggled!", {
           duration: 500,
@@ -30,68 +46,21 @@ export const useUserStore = create(
           return { darkMode: newMode };
         });
       },
-
-      // Set user after login/signup
-      setUser: (user, token) => set({ user, token, loggedIn: true }),
-
-      // Clear user on logout
-      clearUser: () => set({ user: null, token: null, loggedIn: false }),
-      login: async (data, navigate) => {
-        const toastId = toast.loading("Logging in..."); // Show loading toast
-
-        try {
-          const response = await apiClient1.post("login", data);
-          console.log("Response:", response);
-          if (response.status === 200) {
-            set({
-              user: response.data.user,
-              token: response.data.jwt,
-              loggedIn: true,
-            });
-            toast.success(response.data.message || "Login successful!"); // Replace loading toast with success
-            setTimeout(() => {
-              navigate("/dashboard");
-            }, 3000);
-            return response;
-          }
-        } catch (error) {
-          // console.error("Error:", error);
-          toast.error(error.response?.data?.detail || "An error occurred");
-          throw error;
-        } finally {
-          toast.dismiss(toastId);
-        }
-      },
-      fetchUser: async () => {
-        try {
-          const response = await apiClient1.get("user");
-          // console.log("Response:", response);
-          if (response.status === 200) {
-            set({ user: response.data, loggedIn: true });
-          }
-        } catch (error) {
-          console.error("Error:", error.response?.data);
-          toast.error(error.response?.data?.detail);
-        }
-      },
-
-      logOut: async () => {
-        try {
-          const response = await apiClient1.post("logout");
-          console.log(response);
-          if (response.status === 200) {
-            get().clearUser();
-          }
-        } catch (error) {
-          console.error("Error:", error);
-          toast.error(error.response?.data?.detail);
-        }
-      },
     }),
-    { name: "user-storage" },
     {
-      // ...
+      name: "shipment-demo-auth",
     }
   )
-  // )
 );
+
+// Helper function to set basic permissions per role
+function getDefaultPermissions(role) {
+  const permissions = {
+    admin: ["manage_all", "view_dashboard", "manage_users"],
+    manager: ["view_reports", "manage_shipments", "view_dashboard"],
+    driver: ["view_assignments", "update_status"],
+    staff: ["create_shipments", "update_status"],
+    customer: ["track_shipments", "view_history"],
+  };
+  return permissions[role] || [];
+}

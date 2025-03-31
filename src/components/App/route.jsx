@@ -63,29 +63,57 @@ export const routes = [
   //   roles: ["admin", "user"],
   // },
 
-  // {
-  //   path: "/dashboard/",
-  //   element: DashRoutes.DashboardLayout,
-  //   protected: true,
-  //   roles: ["admin", "user"],
-  //   children: [
-  //     {
-  //       path: "",
-  //       element: DashRoutes.Dashboard,
-  //       protected: true,
-  //       roles: ["admin", "user"],
-  //     },
-  //     {
-  //       path: "profile",
-  //       element: DashRoutes.Profile,
-  //       protected: true,
-  //       roles: ["admin", "user"],
-  //     },
+  //   const credentials = {
+  //   admin: {
+  //     email: "admin@shipment.com",
+  //     password: "Admin@123",
+  //     role: "admin",
+  //   },
+  //   manager: {
+  //     email: "manager@shipment.com",
+  //     password: "Manager@123",
+  //     role: "manager",
+  //   },
+  //   driver: {
+  //     email: "driver@shipment.com",
+  //     password: "Driver@123",
+  //     role: "driver",
+  //   },
+  //   staff: {
+  //     email: "staff@shipment.com",
+  //     password: "Staff@123",
+  //     role: "staff",
+  //   },
+  //   customer: {
+  //     email: "customer@shipment.com",
+  //     password: "Customer@123",
+  //     role: "customer",
+  //   },
+  // };
 
-  //     // Add other dashboard routes as needed
-  //     { path: "*", element: Error404 }, // For routes that aren't implemented yet
-  //   ],
-  // },
+  {
+    path: "/dashboard/",
+    element: DashRoutes.DashboardLayout,
+    protected: true,
+    roles: ["admin", "manager", "driver", "staff", "customer"],
+    children: [
+      {
+        path: "",
+        element: DashRoutes.Dashboard,
+        protected: true,
+        roles: ["admin", "manager", "driver", "staff", "customer"],
+      },
+      {
+        path: "profile",
+        element: DashRoutes.Profile,
+        protected: true,
+        roles: ["admin", "manager", "driver", "staff", "customer"],
+      },
+
+      // Add other dashboard routes as needed
+      { path: "*", element: Error404 }, // For routes that aren't implemented yet
+    ],
+  },
 
   // 404 Route
   { path: "*", element: Error404 },

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { Lock, Stethoscope } from "lucide-react";
+import { Lock, Stethoscope, TruckIcon } from "lucide-react";
 import { handleServerReset } from "../../../services/requests/auth";
 
 // import { Card, CardContent } from "@/components/ui/card";
@@ -206,42 +206,41 @@ export default function PasswordResetForm() {
 export const SideImg = ({ height = "full", img, className }) => {
   return (
     <div
-      className={`hidden md:block bg-contain bg-center h -${height} rounded-lg px-4 py-2 overflow-hidden relative ${className}`}
+      className={`hidden lg:block bg-contain bg-center h-${height} rounded-lg px-4 py-2 overflow-hidden relative ${className}`}
       style={{ backgroundImage: `url(${img})` }}
     >
-      {/* Overlay for better text visibility */}
+      {/* Overlay for better readability */}
       <div className="absolute inset-0 bg-black/30"></div>
 
-      {/* Text Section */}
+      {/* Shipment Tracking Overview */}
       <div className="relative z-10 my-4 text-white p-8">
         <h2 className="text-3xl my-16 font-bold">
-          Excellence in Healthcare Management
+          Real-Time Shipment Tracking
         </h2>
         <div className="text-lg">
-          Welcome to MedCare Hospital's management portal. Our integrated system
-          connects healthcare professionals with patients, streamlining
-          appointments, records, and hospital operations for better patient
-          care.
+          Our shipment management system keeps you updated at every stage. From
+          port arrival to final delivery, track your cargo seamlessly with
+          real-time updates.
         </div>
       </div>
 
-      {/* Profile Section - Doctor Testimonial */}
-      <div className="relative z-10 py-4 px-8 rounded-lg mt-[400px] text-white mx-auto bg-blue-600/90 backdrop-blur-sm max-w-md sm:mt-[300px]">
+      {/* Tracking Status Example */}
+      <div className="relative z-10 py-4 px-8 rounded-lg mt-[400px] text-white mx-auto bg-green-600/90 backdrop-blur-sm max-w-md sm:mt-[300px]">
         <div className="flex items-center space-x-4 my-2">
           <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center">
-            <Stethoscope className="w-8 h-8 text-white" />
+            <TruckIcon className="w-8 h-8 text-white" />
           </div>
           <div>
-            <div className="text-xl font-bold">Dr. Sarah Johnson</div>
-            <p className="font-normal mt-1 text-sm">Chief of Cardiology</p>
+            <div className="text-xl font-bold">Shipment #20394</div>
+            <p className="font-normal mt-1 text-sm">Currently in Transit</p>
           </div>
         </div>
         <p className="font-normal text-sm my-4">
-          Our hospital management system has transformed how we deliver care.
-          With streamlined appointments and instant access to patient records,
-          we can focus more on what matters - our patients' health.
+          Your shipment has left the port and is currently en route to the
+          Nairobi distribution center. Estimated arrival: 3 hours.
         </p>
       </div>
     </div>
   );
 };
+

@@ -7,8 +7,10 @@ import {
   Mail,
   Key,
   User,
-  Stethoscope,
+  Truck,
   Shield,
+  Briefcase,
+  Package,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { SideImg } from "./Reset";
@@ -75,27 +77,38 @@ export default function Login() {
     }
   };
 
-  const handleDummyLogin = async () => {
+  const handleDummyLogin = async (e) => {
+    e.preventDefault();
     try {
       setLoading(true);
       setServerError("");
 
-      // Dummy credentials based on user type
+      // Updated dummy credentials for shipment system
       const credentials = {
         admin: {
-          email: "admin@hospital.com",
+          email: "admin@shipment.com",
           password: "Admin@123",
           role: "admin",
         },
-        doctor: {
-          email: "doctor@hospital.com",
-          password: "Doctor@123",
-          role: "doctor",
+        manager: {
+          email: "manager@shipment.com",
+          password: "Manager@123",
+          role: "manager",
         },
-        patient: {
-          email: "patient@hospital.com",
-          password: "Patient@123",
-          role: "patient",
+        driver: {
+          email: "driver@shipment.com",
+          password: "Driver@123",
+          role: "driver",
+        },
+        staff: {
+          email: "staff@shipment.com",
+          password: "Staff@123",
+          role: "staff",
+        },
+        customer: {
+          email: "customer@shipment.com",
+          password: "Customer@123",
+          role: "customer",
         },
       };
 
@@ -126,190 +139,205 @@ export default function Login() {
   };
 
   return (
-    <div className="font-[sans-serif] flex items-center justify-center max-w-screen sm:px-4 lg:px-20">
-      <div className="w-full border-0 grid lg:grid-cols-2 items-center overflow-hidden">
-        <CardContent className="p-6 w-full">
-          <form onSubmit={handleSubmit} noValidate>
-            <div className="">
-              <CardHeader className="p-0 mb-4">
-                <CardTitle className="text-gray-800 text-4xl font-extrabold">
-                  tib<span className="text-rose-600">ER</span>bu HMS
-                </CardTitle>
-                <CardTitle className="text-gray-800 text-2xl">
-                  Staff & Patient Portal
-                </CardTitle>
-                {loggedIn && (
-                  <CardDescription className="text-green-600">
-                    {user.name || user.email}
-                  </CardDescription>
-                )}
-              </CardHeader>
-            </div>
+    <div className="font-[sans-serif]w-full border-0 grid lg:grid-cols-2 items-center overflow-hidden  sm:px-4 lg:px-20">
+      {/* <div className=""> */}
+      <CardContent className="p-6  w-full max-w-2xl mx-auto ">
+        <form onSubmit={handleSubmit} noValidate>
+          <div className="">
+            <CardHeader className="p-0 mb-4">
+              <CardTitle className="text-gray-800 text-4xl font-extrabold">
+                track<span className="text-rose-600">po</span>rt
+              </CardTitle>
+              <CardTitle className="text-gray-800 text-2xl">
+                Shipment Management System
+              </CardTitle>
+              {loggedIn && (
+                <CardDescription className="text-green-600">
+                  Logged in as {user.name + " - " + user.email}
+                </CardDescription>
+              )}
+            </CardHeader>
+          </div>
 
-            {serverError && (
-              <Alert variant="destructive" className="mb-4">
-                <AlertTitle>Error</AlertTitle>
-                <AlertDescription>{serverError}</AlertDescription>
-              </Alert>
+          {serverError && (
+            <Alert variant="destructive" className="mb-4">
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>{serverError}</AlertDescription>
+            </Alert>
+          )}
+
+          {/* Email Input */}
+          <div className="space-y-2 my-4">
+            <Label htmlFor="email">Email Address</Label>
+            <div className="relative">
+              <Input
+                id="email"
+                name="email"
+                type="text"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter email"
+                className={`${
+                  errors.email
+                    ? "border-red-500 focus-visible:ring-red-500"
+                    : ""
+                } pl-10`}
+              />
+              <Mail className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            </div>
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
             )}
+          </div>
 
-            {/* Email Input */}
-            <div className="space-y-2 my-4">
-              <Label htmlFor="email">Email Address</Label>
-              <div className="relative">
-                <Input
-                  id="email"
-                  name="email"
-                  type="text"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Enter email"
-                  className={`${
-                    errors.email
-                      ? "border-red-500 focus-visible:ring-red-500"
-                      : ""
-                  } pl-10`}
-                />
-                <Mail className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-              </div>
-              {errors.email && (
-                <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-              )}
-            </div>
-
-            {/* Password Input */}
-            <div className="space-y-2 mb-4">
-              <Label htmlFor="password">Password</Label>
-              <div className="relative">
-                <Input
-                  id="password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="***********"
-                  className={`${
-                    errors.password
-                      ? "border-red-500 focus-visible:ring-red-500"
-                      : ""
-                  } pl-10 pr-10`}
-                />
-                <Key className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2"
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-400" />
-                  ) : (
-                    <Eye className="h-5 w-5 text-gray-400" />
-                  )}
-                </button>
-              </div>
-              {errors.password && (
-                <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-              )}
-            </div>
-
-            {/* Remember Me & Forgot Password */}
-            <div className="flex items-center justify-between my-8">
-              <div className="flex items-center space-x-2">
-                <input
-                  id="remember-me"
-                  name="rememberMe"
-                  type="checkbox"
-                  checked={formData.rememberMe}
-                  onChange={handleChange}
-                  className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                />
-                <Label
-                  htmlFor="remember-me"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Remember me
-                </Label>
-              </div>
-              <Link
-                to="/forgot"
-                className="text-blue-600 font-semibold text-sm hover:underline"
+          {/* Password Input */}
+          <div className="space-y-2 mb-4">
+            <Label htmlFor="password">Password</Label>
+            <div className="relative">
+              <Input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="***********"
+                className={`${
+                  errors.password
+                    ? "border-red-500 focus-visible:ring-red-500"
+                    : ""
+                } pl-10 pr-10`}
+              />
+              <Key className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2"
               >
-                Forgot Password?
-              </Link>
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5 text-gray-400" />
+                ) : (
+                  <Eye className="h-5 w-5 text-gray-400" />
+                )}
+              </button>
             </div>
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+            )}
+          </div>
 
-            {/* Dev Mode Section */}
-            <div className="mb-6 space-y-2">
-              <Label>Developer Mode</Label>
-              <div className="flex gap-2">
-                <Select
-                  value={devModeUserType}
-                  onValueChange={setDevModeUserType}
-                >
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select user type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="admin">
-                      <div className="flex items-center gap-2">
-                        <Shield className="h-4 w-4" />
-                        Admin
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="doctor">
-                      <div className="flex items-center gap-2">
-                        <Stethoscope className="h-4 w-4" />
-                        Doctor
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="patient">
-                      <div className="flex items-center gap-2">
-                        <User className="h-4 w-4" />
-                        Patient
-                      </div>
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-                <Button
-                  className="flex-1"
-                  variant="outline"
-                  loading={loading}
-                  onClick={handleDummyLogin}
-                >
-                  Quick Login
-                </Button>
-              </div>
-              <p className="text-xs text-gray-500">
-                Use this to quickly test different user roles
-              </p>
+          {/* Remember Me & Forgot Password */}
+          <div className="flex items-center justify-between my-8">
+            <div className="flex items-center space-x-2">
+              <input
+                id="remember-me"
+                name="rememberMe"
+                type="checkbox"
+                checked={formData.rememberMe}
+                onChange={handleChange}
+                className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              />
+              <Label
+                htmlFor="remember-me"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Remember me
+              </Label>
             </div>
+            <Link
+              to="/forgot"
+              className="text-blue-600 font-semibold text-sm hover:underline"
+            >
+              Forgot Password?
+            </Link>
+          </div>
 
-            {/* Login Button */}
-            <Button
+          {/* Dev Mode Section */}
+          <div className="mb-6 space-y-2">
+            <Label>Quick Role Access</Label>
+            <div className="flex gap-2">
+              <Select
+                // value={devModeUserType}
+                onValueChange={setDevModeUserType}
+                variant="success"
+              >
+                <SelectTrigger variant="success" className="w-[150px]">
+                  <SelectValue
+                    placeholder={devModeUserType || "Select user type"}
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="admin">
+                    <div className="flex items-center gap-2">
+                      <Shield className="h-4 w-4" />
+                      Admin
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="manager">
+                    <div className="flex items-center gap-2">
+                      <Briefcase className="h-4 w-4" />
+                      Manager
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="driver">
+                    <div className="flex items-center gap-2">
+                      <Truck className="h-4 w-4" />
+                      Driver
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="staff">
+                    <div className="flex items-center gap-2">
+                      <Package className="h-4 w-4" />
+                      Staff
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="customer">
+                    <div className="flex items-center gap-2">
+                      <User className="h-4 w-4" />
+                      Customer
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+              <Button
+                className="h-10 flex-1"
+                variant="devMode"
+                loading={loading}
+                onClick={(e) => handleDummyLogin(e)}
+              >
+                Quick Login
+              </Button>
+            </div>
+            <p className="text-xs text-gray-500">
+              Use this to quickly test different user roles
+            </p>
+          </div>
+
+          {/* Login Button */}
+          {/* <Button
               type="submit"
               className="w-full"
               variant="default"
               loading={loading}
             >
               Login
-            </Button>
+            </Button> */}
 
-            {/* Register Link */}
-            <p className="text-sm mt-4 text-gray-600 text-center">
-              Don't have an account?{" "}
-              <Link
-                to="/register"
-                className="text-blue-600 font-semibold hover:underline ml-1 whitespace-nowrap"
-              >
-                Register Here
-              </Link>
-            </p>
-          </form>
-        </CardContent>
+          {/* Register Link */}
+          <p className="text-sm mt-4 text-gray-600 text-center">
+            Don't have an account?{" "}
+            <Link
+              to="/register"
+              className="text-blue-600 font-semibold hover:underline ml-1 whitespace-nowrap"
+            >
+              Register Here
+            </Link>
+          </p>
+        </form>
+      </CardContent>
 
-        {/* Left Side - Image */}
-        <SideImg height="full" img={LoginImg} className="hidden lg:block" />
-      </div>
+      {/* Left Side - Image */}
+      <SideImg height="fu ll" img={LoginImg} className="hidden lg:block" />
+      {/* </div> */}
     </div>
   );
 }

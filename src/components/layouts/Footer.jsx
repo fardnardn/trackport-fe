@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Calendar, User, Clock, HelpCircle, Phone } from "lucide-react";
+import { MapPin, Truck, Clock, HelpCircle, Phone, Package } from "lucide-react";
 import { Facebook, Twitter, Instagram, Linkedin, ArrowUp } from "lucide-react";
 import { Button } from "@/components/shadcn/button";
 import { Input } from "@/components/shadcn/input";
@@ -20,14 +20,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Column 1: About */}
           <div>
-            <h2 className="text-2xl font-bold mb-4">
-              Tib
-              <span className="text-rose-600 dark:text-rose-400">ER</span>bu
-            </h2>
+            <div className="flex items-center space-x-2 mb-6">
+              <Package className="h-8 w-8 text-blue-400" />
+              <h2 className="text-2xl font-bold">
+                Track
+                <span className="text-blue-600 dark:text-blue-400">Port</span>
+              </h2>
+            </div>
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-              Streamlining healthcare appointment scheduling for improved
-              patient care. Efficiently manage patient registrations, doctor
-              schedules, and appointment bookings with our comprehensive system.
+              Real-time shipment tracking from port arrival to final delivery.
+              Streamline your logistics with our comprehensive tracking system.
             </p>
             <div className="flex space-x-3 mt-6">
               <Button
@@ -35,19 +37,19 @@ export default function Footer() {
                 variant="outline"
                 className="text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-gray-800 rounded-full h-9 w-9"
               >
-                <Calendar size={18} />
+                <MapPin size={18} />
               </Button>
               <Button
                 size="icon"
                 variant="outline"
                 className="text-green-600 hover:bg-green-50 dark:text-green-400 dark:hover:bg-gray-800 rounded-full h-9 w-9"
               >
-                <User size={18} />
+                <Truck size={18} />
               </Button>
               <Button
                 size="icon"
                 variant="outline"
-                className="text-orange-600 hover:bg-orange-50 dark:text-orange-400 dark:hover:bg-gray-800 rounded-full h-9 w-9"
+                className="text-amber-600 hover:bg-amber-50 dark:text-amber-400 dark:hover:bg-gray-800 rounded-full h-9 w-9"
               >
                 <Clock size={18} />
               </Button>
@@ -69,34 +71,34 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
-                  to="/appointments"
+                  to="/tracking"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 flex items-center"
                 >
-                  <Calendar size={14} className="mr-2" /> Schedule Appointments
+                  <MapPin size={14} className="mr-2" /> Real-Time Tracking
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/doctors"
+                  to="/port-operations"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 flex items-center"
                 >
-                  <User size={14} className="mr-2" /> Find a Doctor
+                  <Package size={14} className="mr-2" /> Port Operations
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/patient-portal"
+                  to="/driver-portal"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 flex items-center"
                 >
-                  <Clock size={14} className="mr-2" /> Patient Portal
+                  <Truck size={14} className="mr-2" /> Driver Portal
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/emergency"
+                  to="/support"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 flex items-center"
                 >
-                  <HelpCircle size={14} className="mr-2" /> Emergency Services
+                  <HelpCircle size={14} className="mr-2" /> Customer Support
                 </Link>
               </li>
             </ul>
@@ -110,18 +112,18 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
-                  to="/health-guidelines"
+                  to="/api-docs"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500"
                 >
-                  Health Guidelines
+                  API Documentation
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/patient-support"
+                  to="/integration-guides"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500"
                 >
-                  Patient Support
+                  Integration Guides
                 </Link>
               </li>
               <li>
@@ -129,15 +131,15 @@ export default function Footer() {
                   to="/tutorials"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500"
                 >
-                  Portal Tutorials
+                  Video Tutorials
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/insurance-info"
+                  to="/shipping-guidelines"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500"
                 >
-                  Insurance Information
+                  Shipping Guidelines
                 </Link>
               </li>
             </ul>
@@ -162,7 +164,7 @@ export default function Footer() {
                   to="/contact"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500"
                 >
-                  Contact Us
+                  Contact Sales
                 </Link>
               </li>
               <li>
@@ -170,7 +172,7 @@ export default function Footer() {
                   to="/feedback"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500"
                 >
-                  Feedback
+                  Send Feedback
                 </Link>
               </li>
               <li>
@@ -194,8 +196,8 @@ export default function Footer() {
                   Stay Updated
                 </h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Get the latest updates on health services, hospital programs,
-                  and medical tips.
+                  Get the latest updates on shipping innovations and logistics
+                  solutions.
                 </p>
               </div>
               <div className="flex space-x-3 mt-4">
@@ -245,8 +247,7 @@ export default function Footer() {
         {/* Copyright & Bottom Links */}
         <div className="flex flex-col md:flex-row justify-between items-center pt-6 border-t border-gray-200 dark:border-gray-800">
           <div className="text-sm text-gray-600 dark:text-gray-400 mb-4 md:mb-0">
-            © {new Date().getFullYear()} Tiberbu Ke Hospital. All rights
-            reserved.
+            © {new Date().getFullYear()} TrackPort. All rights reserved.
           </div>
           <div className="flex space-x-4 text-sm">
             <Link
@@ -267,7 +268,7 @@ export default function Footer() {
               onClick={scrollToTop}
               className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500"
             >
-              <ArrowUp size={14} className="mr-1" /> Top
+              <ArrowUp size={14} className="mr-1" /> Back to Top
             </Button>
           </div>
         </div>
