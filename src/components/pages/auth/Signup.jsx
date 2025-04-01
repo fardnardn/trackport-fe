@@ -3,175 +3,100 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/components/shadcn/form";
+import { useNavigate, Link } from "react-router-dom";
+import { useUserStore } from "@/store/useUserStore";
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/shadcn/form";
 import { Input } from "@/components/shadcn/input";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/shadcn/select";
-import { MultiSelect } from "@/components/shadcn/MultiSelect";
+import { CardHeader, CardTitle } from "@/components/shadcn/card";
+import { Label } from "@/components/shadcn/label";
 import { RadioGroup, RadioGroupItem } from "@/components/shadcn/radio-group";
 import { Button } from "@/components/shadcn/button";
-import {
-  Eye,
-  EyeOff,
-  UserCircle,
-  Mail,
-  Phone,
-  MapPin,
-  Building,
-  Key,
-  KeyRound,
-} from "lucide-react";
-// import { serverSignup } from "../../helpers/auth";
-import { handleServerRegister } from "../../../services/requests/auth";
+import { Eye, EyeOff, UserCircle, Mail, KeyRound } from "lucide-react";
 import { SideImg } from "./Reset";
-import { Link, useNavigate } from "react-router-dom";
 
 // Define the form schema using Zod
 const formSchema = z
   .object({
-    user_type: z.enum(["Bidder", "Tenderer"]),
-    company_name: z.string().min(1, "Please input company name"),
+    role: z.enum(["Customer", "Manager", "Driver", "Staff", "Admin"]),
+    name: z.string().min(1, "Please input a name"),
     email: z.string().email("Please enter a valid email"),
-    contact_number: z
-      .string()
-      .regex(/^07|01\d{8}$/, "Phone number must be in the format 0712345678"),
-    company_type: z.string().optional(),
-    sector: z.string().min(1, "Please select sector type"),
-    kra_pin: z
-      .string()
-      .optional(),
-      // .regex(/^[AP]\d{9}[A-Z,a-z]$/, "Invalid KRA PIN format. e.g AP123456789A"),
-    location: z.string().min(1, "Please enter your location"),
-    industries: z
-      .array(z.string())
-      .min(1, "Please enter at least one industry"),
+    // role: z.string().optional(),
     password: z.string().min(8, "Password must be at least 8 characters"),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"],
-  })
-  .superRefine((data, ctx) => {
-      // Conditional validation for KRA PIN
-      if (data.user_type === "Tenderer") {
-        if (!data.kra_pin) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: "KRA PIN is required for Tenderers",
-            path: ["kra_pin"],
-          });
-        } else if (!/^[AP]\d{9}[A-Za-z]$/.test(data.kra_pin)) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: "Invalid KRA PIN format. e.g AP123456789A",
-            path: ["kra_pin"],
-          });
-        }
-      }
-
-      // Password match validation
-      if (data.password !== data.confirmPassword) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Passwords do not match",
-          path: ["confirmPassword"],
-        });
-      }
-    });
-
-
+  });
 
 export default function Signup() {
   const navigate = useNavigate();
-
-  const [userType, setUserType] = useState("Bidder");
-  const [inputValue, setInputValue] = useState("");
-
+  const { register,loggedIn } = useUserStore();
+  const [userType, setUserType] = useState("Customer");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      user_type: "Bidder",
-      industries: [],
-      company_name: "",
+      role: "Customer",
+      name: "",
       email: "",
-      contact_number: "",
-      company_type: "",
-      sector: "",
-      kra_pin: "",
-      location: "",
+      // role: "",
       password: "",
       confirmPassword: "",
     },
   });
 
-  const industries = form.watch("industries") || [];
-
   const onSubmit = async (values) => {
-      console.log("Form errors:", form.formState.errors);
-
-      console.log(values);
     try {
-      // const res = await handleServerRegister(values, navigate);
-    } catch (error) {
-      let errorMSG = "Server error, try again later";
+      const userData = {
+        ...values,
+        role: values.role.toLowerCase(), // Convert role 
+      };
 
-      if (error.response && error.response.data) {
-        const errorData = error.response.data.error || error.response.data;
+      const response = await register(userData);
+      // console.log(response);
 
-        if (Array.isArray(errorData)) {
-          errorMSG = errorData.join(", ");
-        } else if (typeof errorData === "string") {
-          errorMSG = errorData;
-        } else if (errorData.email || errorData.kra_pin) {
-          errorMSG = Object.values(errorData).join(", ");
-        }
+      if (response.error) {
+        toast.error(response.error);
+        return;
+      } else {
+        setTimeout(() => navigate("/login"), 2000);
+        console.log(response);
       }
 
-      toast.error(errorMSG);
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.");
     }
   };
 
   return (
-    <div className="min-h-screen grid lg:grid-cols-2 items-center gap-4   rounded-md overflow-hidden  mx-auto p-5">
-      {/* Right Side - Form */}
+    <div className="min-h-screen grid lg:grid-cols-2 items-center gap-4 rounded-md overflow-hidden mx-auto p-5">
+      {/* Left Side - Form */}
       <div className="w-full p-8">
-        <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">
-            Create Your Account
-          </h2>
-          <p className="text-gray-600 mt-1">
-            Already have an account?{" "}
-            <Link to="/login" className="text-green-600 font-semibold">
-              Login
-            </Link>
-          </p>
+        <div className="my-9">
+          <CardHeader className="p-0 mb-4">
+            <CardTitle className="text-gray-800 text-4xl font-extrabold">
+              track<span className="text-rose-600">po</span>rt
+            </CardTitle>
+            <CardTitle className="text-gray-800 text-2xl">
+              Create Your Account
+            </CardTitle>
+            {loggedIn && (
+              <CardDescription className="text-green-600">
+                Logged in as {user.name + " - " + user.email}
+              </CardDescription>
+            )}
+          </CardHeader>
         </div>
 
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             {/* Account Type */}
-            {/* <FormField
+            <FormField
               control={form.control}
-              name="user_type"
+              name="role"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Account Type</FormLabel>
@@ -179,30 +104,33 @@ export default function Signup() {
                     <RadioGroup
                       onValueChange={(value) => {
                         field.onChange(value);
-                        setUserType(value);
+                        // setUserType(value);
                       }}
                       defaultValue={field.value}
                       className="flex gap-4"
                     >
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="Bidder" id="Bidder" />
-                        <label htmlFor="Bidder">Bidder/Supplier</label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="Tenderer" id="Tenderer" />
-                        <label htmlFor="Tenderer">Tender Advertiser</label>
-                      </div>
+                      {["Customer", "Admin", "Manager", "Driver", "Staff"].map(
+                        (role) => (
+                          <div
+                            key={role}
+                            className="flex items-center space-x-2"
+                          >
+                            <RadioGroupItem value={role} id={role} />
+                            <label htmlFor={role}>{role}</label>
+                          </div>
+                        )
+                      )}
                     </RadioGroup>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
-            /> */}
+            />
 
-            {/* Company Name */}
+            {/* Name */}
             <FormField
               control={form.control}
-              name="company_name"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Name</FormLabel>
@@ -221,7 +149,7 @@ export default function Signup() {
               )}
             />
 
-            {/* Email Address */}
+            {/* Email */}
             <FormField
               control={form.control}
               name="email"
@@ -234,7 +162,7 @@ export default function Signup() {
                       <Input
                         {...field}
                         placeholder="Enter your email address"
-                        className="pl-10" // Add padding to prevent text overlap
+                        className="pl-10"
                       />
                     </div>
                   </FormControl>
@@ -243,232 +171,21 @@ export default function Signup() {
               )}
             />
 
-            {/* Phone Number */}
-            <FormField
-              control={form.control}
-              name="contact_number"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Phone Number</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <Phone className="text-emerald-800 absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5" />
-                      <Input
-                        {...field}
-                        placeholder="0712345678"
-                        className="pl-10" // Add padding to prevent text overlap
-                        maxLength={10}
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Company Type */}
-            {userType === "Tenderer" && (
-              <FormField
-                control={form.control}
-                name="company_type"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Company Type</FormLabel>
-                    <FormControl>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Company Type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="private">Private</SelectItem>
-                          <SelectItem value="Government">Government</SelectItem>
-                          <SelectItem value="ngo">
-                            Non-Governmental Organization
-                          </SelectItem>
-                          <SelectItem value="partnership">
-                            Partnership
-                          </SelectItem>
-                          <SelectItem value="others">Others</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
-
-            {/* Sector Type */}
-            <FormField
-              control={form.control}
-              name="sector"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Sector</FormLabel>
-                  <FormControl>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Enter your sector" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="private">Private</SelectItem>
-                        <SelectItem value="Government">Government</SelectItem>
-                        <SelectItem value="ngo">
-                          Non-Governmental Organization
-                        </SelectItem>
-                        <SelectItem value="partnership">Partnership</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* KRA Pin */}
-            {userType === "Tenderer" && (
-              <FormField
-                control={form.control}
-                name="kra_pin"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>KRA PIN Number</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="KRA Number"
-                        startIcon={<Key className="text-emerald-800 mr-2" />}
-                        maxLength={11}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
-
-            {/* Location */}
-            <FormField
-              control={form.control}
-              name="location"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Location</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <MapPin className="text-emerald-800 absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5" />
-                      <Input
-                        {...field}
-                        placeholder="Enter your location"
-                        className="pl-10" // Add padding to prevent text overlap
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Industries */}
-
-            <FormField
-              control={form.control}
-              name="industries"
-              render={({ field, fieldState }) => (
-                <FormItem>
-                  <FormLabel>
-                    Industries{" "}
-                    <span className="text-muted-foreground">
-                      (Press Enter or comma to add)
-                    </span>
-                  </FormLabel>
-                  <FormControl>
-                    <div className="space-y-2">
-                      <div className="relative">
-                        <Building className="text-emerald-800 absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5" />
-                        <Input
-                          // {...field}
-                          value={inputValue} // Separate state for current input
-                          placeholder="e.g. Technology, Healthcare, Finance"
-                          onChange={(e) => setInputValue(e.target.value)}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter" || e.key === ",") {
-                              e.preventDefault();
-                              if (inputValue.trim()) {
-                                const newIndustry = inputValue.trim();
-
-                                // setIndustries(newIndustries);
-                                form.setValue("industries", [
-                                  ...industries,
-                                  newIndustry,
-                                ]);
-
-                                setInputValue("");
-                              }
-                            }
-                          }}
-                          className={`${
-                            fieldState.error ? "border-red-500" : ""
-                          } pl-10`}
-                        />
-                      </div>
-
-                      {/* Industries Tags */}
-                      {industries.length > 0 && (
-                        <div className="flex flex-wrap gap-2">
-                          {industries.map((industry, index) => (
-                            <div
-                              key={`${industry}-${index}`}
-                              className="inline-flex items-center bg-emerald-100 text-emerald-800 rounded-full px-3 py-1 text-sm"
-                            >
-                              {industry}
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  form.setValue(
-                                    "industries",
-                                    industries.filter((_, i) => i !== index)
-                                  );
-                                }}
-                                className="ml-2 cursor-pointer text-rose-600 hover:text-rose-800"
-                              >
-                                ×
-                              </button>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </FormControl>
-                  <FormMessage className="text-red-500" />
-                </FormItem>
-              )}
-            />
-
-            {/* <MultiSelect/> */}
             {/* Password */}
             <FormField
               control={form.control}
               name="password"
-              render={({ field, fieldState }) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
                     <div className="relative">
-                      <Key className="text-emerald-800 absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5" />
+                      <KeyRound className="text-emerald-800 absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5" />
                       <Input
                         {...field}
                         type={showPassword ? "text" : "password"}
                         placeholder="Create your password"
-                        className={`${
-                          fieldState.error ? "border-red-500" : ""
-                        } pl-10`}
+                        className="pl-10"
                       />
                       <button
                         type="button"
@@ -492,20 +209,17 @@ export default function Signup() {
             <FormField
               control={form.control}
               name="confirmPassword"
-              render={({ field, fieldState }) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
                     <div className="relative">
-                      <Key className="text-emerald-800 absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5" />
-
+                      <KeyRound className="text-emerald-800 absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5" />
                       <Input
                         {...field}
                         type={showConfirmPassword ? "text" : "password"}
                         placeholder="Confirm your password"
-                        className={`${
-                          fieldState.error ? "border-red-500" : ""
-                        } pl-10`}
+                        className="pl-10"
                       />
                       <button
                         type="button"
@@ -526,18 +240,35 @@ export default function Signup() {
                 </FormItem>
               )}
             />
+            {/* Remember Me & Forgot Password */}
+            <div className="flex items-center justify-between my-8">
+              <Link
+                to=""
+                className="text-blue-600 font-semibold text-sm hover:underline"
+              >
+                Forgot Password?
+              </Link>
+            </div>
 
             {/* Submit Button */}
             <Button
+              variant="default"
               type="submit"
-              className="w-full bg-green-500 hover:bg-green-700"
+              className="w-full"
             >
               Create Account
             </Button>
+            <p className="text-gray-600 mt-1">
+              Already have an account?{" "}
+              <Link to="/login" className="text-blue-600 font-semibold">
+                Login
+              </Link>
+            </p>
           </form>
         </Form>
       </div>
 
+      {/* Right Side - Image */}
       <SideImg height="full" />
     </div>
   );

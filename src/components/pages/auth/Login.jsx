@@ -86,8 +86,8 @@ export default function Login() {
       // Updated dummy credentials for shipment system
       const credentials = {
         admin: {
-          email: "admin@shipment.com",
-          password: "Admin@123",
+          email: "admin@trackport.com",
+          password: "Admin@n123",
           role: "admin",
         },
         manager: {
@@ -115,15 +115,15 @@ export default function Login() {
       const dummyCredentials = credentials[devModeUserType];
 
       const res = await login(dummyCredentials, navigate);
-      if (res) {
-        toast.success(`Logged in as ${devModeUserType} successfully!`, {
-          duration: 2000,
-          description: `You now have ${devModeUserType} level access`,
-        });
-        setTimeout(() => {
-          navigate("/dashboard/settings/profile");
-          
-        }, 2000);
+      if (res.success) {
+        console.log(res);
+
+      }if (res.error) {
+        setServerError(res.error);
+
+       
+      } else {
+        console.log(res);
       }
     } catch (error) {
       console.error("Dummy login failed:", error);
@@ -143,7 +143,7 @@ export default function Login() {
   };
 
   return (
-    <div className="font-[sans-serif]w-full border-0 grid lg:grid-cols-2 items-center overflow-hidden  sm:px-4 lg:px-20">
+    <div className="min-h-screen font-[sans-serif]w-full border-0 grid lg:grid-cols-2 items-center overflow-hidden  sm:px-4 lg:px-20 mx-auto">
       {/* <div className=""> */}
       <CardContent className="p-6  w-full max-w-2xl mx-auto ">
         <form onSubmit={handleSubmit} noValidate>
@@ -248,7 +248,7 @@ export default function Login() {
               </Label>
             </div>
             <Link
-              to="/forgot"
+              to=""
               className="text-blue-600 font-semibold text-sm hover:underline"
             >
               Forgot Password?
@@ -256,7 +256,7 @@ export default function Login() {
           </div>
 
           {/* Dev Mode Section */}
-          <div className="mb-6 space-y-2">
+          {/* <div className="mb-6 space-y-2">
             <Label>Quick Role Access</Label>
             <div className="flex gap-2">
               <Select
@@ -314,17 +314,17 @@ export default function Login() {
             <p className="text-xs text-gray-500">
               Use this to quickly test different user roles
             </p>
-          </div>
+          </div> */}
 
           {/* Login Button */}
-          {/* <Button
+          <Button
               type="submit"
               className="w-full"
               variant="default"
               loading={loading}
             >
               Login
-            </Button> */}
+            </Button>
 
           {/* Register Link */}
           <p className="text-sm mt-4 text-gray-600 text-center">
